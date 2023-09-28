@@ -3,7 +3,9 @@ function satu(params) {
 }
 
 function dua(params) {
-    console.log("2");
+    setTimeout(() => {
+        console.log("2");
+    },0)
 }
 
 function tiga(params) {
