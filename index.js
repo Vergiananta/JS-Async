@@ -1,17 +1,12 @@
-function satu(params) {
-    console.log("1")
+const role = "staff"
+
+function person(name, callback) {
+    console.log("Proses karyawan .....")
+    setTimeout(()=> {
+        callback({name, role})
+    },1500)
 }
 
-function dua(params) {
-    setTimeout(() => {
-        console.log("2");
-    },0)
-}
-
-function tiga(params) {
-    console.log("3");
-}
-
-satu()
-dua()
-tiga()
+person("egi", function(response) {
+    console.log(response)
+})
