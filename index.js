@@ -39,14 +39,16 @@ function getKaryawan(role) {
     })
 }
 
-const user = person("egi")
-user.then((data)=> {
-    const {name, role}= data
-    getKaryawan(role).then((response) => {
-        const {karyawan} = response
-        getPicture(karyawan).then((response3) => {
-            const {pict} = response3
-            console.log(pict)
-        })
-    })
-})
+async function displayKaryawan() {
+    const {name, role} = await person('egi')
+    const {karyawan} = await getKaryawan(role)
+    const {pict} = await getPicture(karyawan)
+
+    console.log(`
+    karyawan ${name} dengan role ${role}
+    memiliki bawahan ${karyawan}
+    dengan data foto ${pict}
+    `);
+}
+
+displayKaryawan()
