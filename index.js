@@ -2,38 +2,51 @@ const role = "staff"
 const picture = ["profile1.jpg", "profile2.jpg", "profile3.jpg"]
 const listKaryawan = ["Joko", "Budi", "Sinta"]
 
-function person(name, callback) {
+function person(name) {
     console.log(`Proses data karyawan ${name} .....`)
-    setTimeout(()=> {
-        callback({name, role})
-    },1500)
+    return new Promise((resolve, reject) => {
+        setTimeout(()=> {
+            if (name !== "egi") {
+                reject("Bukan user egi")
+            }
+            resolve({name, role})
+        },1500)
+    })
 }
 
-function getPicture(listKaryawan, callback) {
+function getPicture(listKaryawan) {
     console.log('processing picture now ....');
-    if (listKaryawan.length > 0) {
+    return new Promise((resolve, reject) => {
         setTimeout(() => {
-            callback({pict: picture})
-        },1000)
-    }
+                if (listKaryawan.length > 0) {
+                resolve({pict: picture})
+                } else {
+                    reject("data karyawan tidak ada")
+                }
+            },1000)
+    })
 }
 
-function getKaryawan(role, callback) {
+function getKaryawan(role) {
     console.log('processing karyawan now ....');
-    if (role) {
+    return new Promise((resolve, reject) => {
         setTimeout(() => {
-            callback({karyawan: listKaryawan})
-        }, 1000)
-    }
+            if (role !== 'staff') {
+                reject("role tidak sesuai")
+            }
+            resolve({karyawan: listKaryawan})
+            }, 1000)
+    })
 }
 
-person("egi", function(response) {
-    const {role} = response
-    getKaryawan(role, function (response2) {
-        const {karyawan} = response2
-        getPicture(karyawan, function(response3){
+const user = person("egi")
+user.then((data)=> {
+    const {name, role}= data
+    getKaryawan(role).then((response) => {
+        const {karyawan} = response
+        getPicture(karyawan).then((response3) => {
             const {pict} = response3
-            console.log(pict) 
-        } )
+            console.log(pict)
+        })
     })
 })
