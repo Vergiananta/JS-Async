@@ -1,4 +1,6 @@
 const role = "staff"
+const picture = ["profile1.jpg", "profile2.jpg", "profile3.jpg"]
+const listKaryawan = ["Joko", "Budi", "Sinta"]
 
 function person(name, callback) {
     console.log(`Proses data karyawan ${name} .....`)
@@ -7,46 +9,31 @@ function person(name, callback) {
     },1500)
 }
 
+function getPicture(listKaryawan, callback) {
+    console.log('processing picture now ....');
+    if (listKaryawan.length > 0) {
+        setTimeout(() => {
+            callback({pict: picture})
+        },1000)
+    }
+}
+
+function getKaryawan(role, callback) {
+    console.log('processing karyawan now ....');
+    if (role) {
+        setTimeout(() => {
+            callback({karyawan: listKaryawan})
+        }, 1000)
+    }
+}
+
 person("egi", function(response) {
-    console.log(response)
-})
-
-
-// // case 2:
-
-// // Anggap ini adalah data yang ada di dalam database 
-const data = [1, 2, 3]
-
-function hapusData() {
-    setTimeout(function () {
-        // hapus salah satu data
-        data.pop();
-    }, 500);
-}
-
-function tampilData() {
-    setTimeout(function () {
-        // tampilkan semua data
-        console.log(data)
-    }, 300);
-}
-
-hapusData()
-tampilData()
-
-// penyederhanaan case 2 
-function hapusData(callback) {
-    setTimeout(function () {
-        // remove value dari array data
-        data.pop();
-        // panggil function tampilData
-        callback()
-    }, 500);
-}
-
-hapusData(function tampilData() {
-    setTimeout(function () {
-        // tampilkan value dari array data
-        console.log(data)
-    }, 300);
+    const {role} = response
+    getKaryawan(role, function (response2) {
+        const {karyawan} = response2
+        getPicture(karyawan, function(response3){
+            const {pict} = response3
+            console.log(pict) 
+        } )
+    })
 })
